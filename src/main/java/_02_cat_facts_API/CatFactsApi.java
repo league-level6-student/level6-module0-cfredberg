@@ -67,20 +67,25 @@ public class CatFactsApi {
 
         //Make the request, saving the response in an object of the type that you just created in your
         //data_transfer_objects package (CatWrapper)
-
+    	Mono<CatWrapper> cat = webClient
+        		.get()
+                .uri(uriBuilder -> uriBuilder
+                        .build())
+                .retrieve()
+                .bodyToMono(CatWrapper.class);
         //Use block() to collect the response into a java object using the class you just created
-
+    	CatWrapper json = cat.block();
         //return the Object
-        return null;
+        return json.getData().get(0);
 
 
     }
 
     public String findCatFact(){
         //use the getCatFact method to retrieve a cat fact
-
+    	String fact = getCatFact();
         //return the first (and only) String in the Arraylist of data in the response
-        return null;
+        return fact;
     }
 
     public void setWebClient(WebClient webClient) {
